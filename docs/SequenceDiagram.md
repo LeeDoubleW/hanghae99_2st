@@ -151,5 +151,6 @@ sequenceDiagram
     History-->>-Order: 주문취소이력추가 완료
     Order->>+Product: 수량증가 요청
     Product-->>-Order: 수량증가 완료
-```
     Order-->>-User: 주문취소 완료
+```
+    
