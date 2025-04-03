@@ -1,5 +1,5 @@
 ## 잔액 조회 시퀀스 다이어그램
-mermaid```
+```mermaid
 sequenceDiagram
     UserController->>+UserService: 잔액조회요청
     UserService->>+UserRepository: 고객정보 조회
@@ -11,7 +11,7 @@ sequenceDiagram
 ```
 
 ## 잔액 충전 시퀀스 다이어그램
-mermaid```
+```mermaid
 sequenceDiagram
     UserController->>+UserService: 충전 요청
     UserService->>+UserRepository: 고객정보 조회
@@ -27,7 +27,7 @@ sequenceDiagram
 ```
 
 ## 쿠폰 조회 시퀀스 다이어그램
-mermaid```
+```mermaid
 sequenceDiagram
     actor User as User
     participant Coupon as Coupon
@@ -36,7 +36,7 @@ sequenceDiagram
 ```
 
 ## 쿠폰 발급 시퀀스 다이어그램
-mermaid```
+```mermaid
 sequenceDiagram
   actor User as User
   participant Coupon as Coupon
@@ -49,7 +49,7 @@ sequenceDiagram
   Coupon -->>- User: 쿠폰 발급 성공
 ```
 ## 상품 조회 시퀀스 다이어그램
-mermaid```
+```mermaid
 sequenceDiagram
     participant ProductController
     participant ProductService
@@ -66,7 +66,7 @@ sequenceDiagram
 ```
 
 ## 인기 상품 조회 시퀀스 다이어그램
-mermaid```
+```mermaid
 sequenceDiagram
     ProductController->>+ProductService: 인기 상품 추천 목록 요청
     ProductService->>OrderHistoryRepository: getTopTenPrdIdList()
@@ -81,7 +81,7 @@ sequenceDiagram
 ```
 
 ## 주문 시퀀스 다이어그램
-mermaid```
+```mermaid
 sequenceDiagram
     actor User
     participant Order as Order
@@ -119,7 +119,7 @@ sequenceDiagram
 ```
 
 ## 주문 조회 시퀀스 다이어그램
-mermaid```
+```mermaid
 sequenceDiagram
     actor User
     participant Order as Order
@@ -128,7 +128,7 @@ sequenceDiagram
 ```
 
 ## 주문 취소 시퀀스 다이어그램
-mermaid```
+```mermaid
 sequenceDiagram
     actor User
     participant Order as Order
