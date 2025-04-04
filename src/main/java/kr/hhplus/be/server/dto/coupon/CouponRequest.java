@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class CouponRequest {
-	private String userId;
-	private String couponId;
+	private long userId;
+	private long couponId;
 }

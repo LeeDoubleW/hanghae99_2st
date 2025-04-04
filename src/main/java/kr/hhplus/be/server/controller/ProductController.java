@@ -5,13 +5,13 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kr.hhplus.be.server.dto.product.ProductRequest;
 
 @RestController
 @RequestMapping("/product")
@@ -21,9 +21,10 @@ public class ProductController {
 	@GetMapping("/{productId}")
     @Operation(summary = "상품 상세 조회", description = "상품 ID를 기반으로 상세 정보를 조회합니다.")
     public ResponseEntity<Map<String, Object>> getProduct(
-            @Parameter(description = "상품 ID", example = "1")
-            @PathVariable("productId") Long productId
+            @RequestBody ProductRequest request
     ) {
+		long productId = 100001;
+		
         Map<String, Object> product = Map.of(
                 "productId", productId,
                 "productNm", "고래밥",
