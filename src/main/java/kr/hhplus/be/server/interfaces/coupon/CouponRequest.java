@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.dto.coupon;
+package kr.hhplus.be.server.interfaces.coupon;
 
 import lombok.Getter;
 

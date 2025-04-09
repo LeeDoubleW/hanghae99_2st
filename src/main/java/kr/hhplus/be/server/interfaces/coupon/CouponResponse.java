@@ -1,3 +1,3 @@
-package kr.hhplus.be.server.dto.coupon;
+package kr.hhplus.be.server.interfaces.coupon;
 
 public record CouponResponse(long couponId, String couponNm) {}

@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.dto.order;
+package kr.hhplus.be.server.interfaces.order;
 
 import lombok.Getter;
 
