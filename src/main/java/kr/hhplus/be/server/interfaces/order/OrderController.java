@@ -14,25 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kr.hhplus.be.server.application.order.OrderFacade;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/order")
+@RequiredArgsConstructor
 @Tag(name = "주문", description = "주문 관련 API")
 public class OrderController {
+	private final OrderFacade orderFacade; 
 	// 주문
 	@PostMapping("/order")
 	@Operation(summary = "주문", description = "주문을 요청합니다.")
-    public ResponseEntity<Map<String, Object>> createOrder(@RequestBody OrderRequest request) {
+    public ResponseEntity<OrderResponse.V1> createOrder(@RequestBody OrderRequest request) {
 		
-		Map<String, Object> response = Map.of(
-        	"orderId", 10001,
-        	"totalAmount", 100000,
-        	"couponId", 10001
-		);
-        return ResponseEntity.ok(Map.of(
-        		"orderData", response, 
-        		"messege", "주문완료"
-        ));
+		return ResponseEntity.ok(OrderResponse.V1.of(null, null));
     }
 	// 주문내역 목록조회
 	@PostMapping("/list")

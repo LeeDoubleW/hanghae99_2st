@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.domain.payment;
+package kr.hhplus.be.server.domain.order;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,22 +8,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-@Entity(name = "payment")
+@Entity(name = "order_items")
 @Getter
 @Accessors(fluent = true)
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
-public class Payment {
-	
+public class OrderItem {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private Long userId;
+    private Long id;
 	private Long orderId;
-	private Long amount;
-	
-	public Payment(Long userId,Long orderId,Long amount) {
-		this.orderId = orderId;
-		this.userId = userId;
-		this.amount = amount;
-	}
+    private int productPrice;
+    private int quantity;
+    private int amount;
+
+    public OrderItem(Long orderId, int productPrice,int quantity) {
+    	this.orderId = orderId;
+        this.productPrice = productPrice;
+        this.quantity = quantity;
+        this.amount = productPrice * quantity;
+    }
 }

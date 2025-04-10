@@ -43,6 +43,18 @@ public class Product {
 				.build();
 	}
 	
+	public void decreaseQuantity(Long quantity) {
+		if(quantity <= 0) {
+			throw new IllegalArgumentException();
+		}
+		
+		if(this.remainQuantity - quantity < 0) {
+			throw new IllegalArgumentException();
+		}
+		
+		this.remainQuantity -= quantity;
+	}
+	
 	private void validateId(Long id) {
         if (id == null || id == 0) {
             throw new IllegalArgumentException("상품ID가 잘못되었습니다.");

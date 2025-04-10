@@ -18,4 +18,15 @@ public class ProductService {
 	public List<ProductInfo.V1> getProductList() {
 		return productRepo.findProducts();
 	}
+	
+	public void decreaseQuantity(Long productId, Long quantity) {
+		ProductInfo.V1 info = productRepo.findById(productId);
+		Product product = Product.of(info.getId(), info.getProductName(), info.getPrice(), info.getTotalQuantity(), info.getRemainQuantity());
+		if(info == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		product.decreaseQuantity(quantity);
+		productRepo.save(product);
+	}
 }
