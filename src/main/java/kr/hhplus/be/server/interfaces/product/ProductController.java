@@ -1,71 +1,52 @@
 package kr.hhplus.be.server.interfaces.product;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kr.hhplus.be.server.domain.product.Product;
+import kr.hhplus.be.server.domain.product.ProductInfo;
+import kr.hhplus.be.server.domain.product.ProductService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/product")
 @Tag(name = "Product", description = "상품 관련 API")
 public class ProductController {
+	private final ProductService productService;
+	
 	// 상품조회
 	@GetMapping("/{productId}")
     @Operation(summary = "상품 상세 조회", description = "상품 ID를 기반으로 상세 정보를 조회합니다.")
-    public ResponseEntity<Map<String, Object>> getProduct(
-            @RequestBody ProductRequest request
+    public ResponseEntity<ProductResponse.V1> getProduct(
+    		@PathVariable Long productId
     ) {
-		long productId = 100001;
+		ProductInfo.V1 product = productService.getProduct(productId);
 		
-        Map<String, Object> product = Map.of(
-                "productId", productId,
-                "productNm", "고래밥",
-                "categoryId", 5,
-                "categoryName", "스낵류",
-                "price", 1500,
-                "stock", 200
-        );
-
-        return ResponseEntity.ok(Map.of(
-                "data", product,
-                "message", "상품 상세 조회 성공"
-        ));
+		return ResponseEntity.ok(ProductResponse.V1.of(product.getId(), product.getProductName(), product.getPrice(), product.getRemainQuantity()));
     }
 	
 	// 상품목록조회
 	@GetMapping("/list")
     @Operation(summary = "상품 목록 조회", description = "전체 상품 목록을 조회합니다.")
-    public ResponseEntity<Map<String, Object>> productList() {
-        List<Map<String, Object>> products = List.of(
-                Map.of(
-                        "productId", 100001,
-                        "productNm", "베이컨",
-                        "categoryId", 3,
-                        "categoryName", "육가공류",
-                        "price", 12000,
-                        "stock", 100
-                ),
-                Map.of(
-                        "productId", 100002,
-                        "productNm", "프라이팬",
-                        "categoryId", 6,
-                        "categoryName", "주방도구",
-                        "price", 35000,
-                        "stock", 50
-                )
-        );
+    public ResponseEntity<ProductResponse.V2> getProductList() {
+        List<ProductInfo.V1> productList = productService.getProductList();
+        List<Product> products = new ArrayList<Product>();
+        for(ProductInfo.V1 productInfo : productList) {
+        	Product data = new Product(productInfo.getId(), productInfo.getProductName(), productInfo.getPrice(), productInfo.getTotalQuantity(), productInfo.getRemainQuantity());
+        	products.add(data);
+        }
 
-        return ResponseEntity.ok(Map.of(
-                "data", products,
-                "message", "상품 목록 조회 성공"
-        ));
+        return ResponseEntity.ok(ProductResponse.V2.of(products));
     }
 	
 	// 인기상품목록조회
