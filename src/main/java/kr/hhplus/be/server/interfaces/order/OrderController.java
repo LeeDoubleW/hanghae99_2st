@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.hhplus.be.server.application.order.OrderFacade;
+import kr.hhplus.be.server.application.order.OrderResult;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -26,10 +27,11 @@ public class OrderController {
 	// 주문
 	@PostMapping("/order")
 	@Operation(summary = "주문", description = "주문을 요청합니다.")
-    public ResponseEntity<OrderResponse.V1> createOrder(@RequestBody OrderRequest request) {
-		
-		return ResponseEntity.ok(OrderResponse.V1.of(null, null));
+    public ResponseEntity<OrderResponse.V1> createOrder(@RequestBody OrderRequest.V1 request) {
+		OrderResult result = orderFacade.orderAndPayment(request.toCommand());
+		return ResponseEntity.ok(null);
     }
+	/*
 	// 주문내역 목록조회
 	@PostMapping("/list")
 	@Operation(summary = "주문목록 조회", description = "주문목록을 조회합니다.")
@@ -89,4 +91,5 @@ public class OrderController {
         		"messege", "주문취소 성공"
         ));
     }
+    */
 }

@@ -1,13 +1,16 @@
 package kr.hhplus.be.server.domain.order;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import kr.hhplus.be.server.domain.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +20,8 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Order extends BaseEntity{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,35 +31,34 @@ public class Order extends BaseEntity{
 	private Long totalAmount;
 	private Long discountAmount;
 	private Long finalAmount;
-	private List<OrderItem> items = new ArrayList<>();
 	
-	@Builder
-	public Order(Long userId, Long issuedCouponId, Long totalAmount, Long discountAmount, Long finalAmount, List<OrderItem> items) {
-		this.userId = userId;
-		this.issuedCouponId = issuedCouponId;
-		this.totalAmount = totalAmount;
-		this.discountAmount = discountAmount;
-		this.finalAmount = finalAmount;
-		this.items = items;
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<OrderItem> items;
+	
+	
+	public static Order createOrder(Long userId, Long issuedCouponId, List<OrderItem> items) {
+        Order order = Order.builder()
+                .userId(userId)
+                .issuedCouponId(issuedCouponId)
+                .items(items)
+                .build();
+        order.calculateTotalPrice();
+        return order;
+    }
+	
+	public void calculateTotalPrice() {
+        this.totalAmount = items.stream().mapToLong(OrderItem::getTotalPrice).sum();
+    }
+	
+	public void calculateDiscountPrice(String type, Long amount) {
+		if(type.equals("PERCENT")) {
+			this.discountAmount = this.totalAmount * amount;
+		} else {
+			this.discountAmount = amount;
+		}
 	}
 	
-	public static Order of(Long userId, Long issuedCouponId, Long totalAmount, Long discountAmount, Long finalAmount, List<OrderItem> items) {
-		return Order.builder()
-				.userId(userId)
-				.issuedCouponId(issuedCouponId)
-				.totalAmount(totalAmount)
-				.discountAmount(discountAmount)
-				.finalAmount(finalAmount)
-				.items(items)
-				.build();
-	}
-	
-	public Long calculateDiscountPrice() {
-		// 쿠폰에 대한 처리필요 
-		return null;
-	}
-	
-	public Long calculateFinalPrice() {
-		return null;
+	public void calculateFinalPrice() {
+		this.finalAmount = this.totalAmount - this.discountAmount;
 	}
 }

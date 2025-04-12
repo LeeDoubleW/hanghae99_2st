@@ -17,15 +17,29 @@ public class OrderItem extends BaseEntity{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	private Long orderId;
-    private int productPrice;
-    private int quantity;
-    private int amount;
 
-    public OrderItem(Long orderId, int productPrice,int quantity) {
-    	this.orderId = orderId;
-        this.productPrice = productPrice;
-        this.quantity = quantity;
-        this.amount = productPrice * quantity;
+    private Long orderId;
+    
+    private Long productId;
+
+    private Long quantity;
+
+    private Long price;
+
+    private Long amount;
+    
+    public OrderItem(Long productId, Long quantity, Long price) {
+    	this.productId = productId;
+    	this.quantity = quantity;
+    	this.price = price;
+    	this.amount = price * quantity;
+    }
+    
+    public static OrderItem of(Long productId, Long quantity, Long price) {
+    	return new OrderItem(productId, quantity, price);
+    }
+
+    public long getTotalPrice() {
+        return price * quantity;
     }
 }

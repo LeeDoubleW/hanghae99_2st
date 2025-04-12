@@ -27,4 +27,8 @@ public class Payment extends BaseEntity{
 		this.userId = userId;
 		this.amount = amount;
 	}
+	
+	public static Payment of(Long userId,Long orderId,Long amount) {
+		return new Payment(userId, orderId, amount);
+	}
 }
