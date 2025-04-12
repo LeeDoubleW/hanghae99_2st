@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
-import java.util.Optional;
-
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +16,6 @@ import kr.hhplus.be.server.domain.user.UserPoint;
 import kr.hhplus.be.server.domain.user.UserPointCommand;
 import kr.hhplus.be.server.domain.user.UserPointRepository;
 import kr.hhplus.be.server.domain.user.UserPointService;
-import kr.hhplus.be.server.interfaces.point.UserPointRequest;
 
 @ExtendWith(MockitoExtension.class)
 public class UserPointServiceTest {

@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import kr.hhplus.be.server.domain.coupon.CouponInfo;
-import kr.hhplus.be.server.domain.product.ProductInfo;
+import kr.hhplus.be.server.domain.product.Product;
 import kr.hhplus.be.server.domain.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -19,9 +19,9 @@ public class OrderService {
 	public Order createOrder(OrderCommand.Order command, CouponInfo.IssueCoupon issueCoupon) {
 		List<OrderItem> orderItems = new ArrayList<>();
 		command.getProducts().forEach(op -> {
-			ProductInfo.V1 data =  productRepository.findById(op.getProductId());
+			Product data =  productRepository.findById(op.getProductId());
 			
-			OrderItem orderItem = OrderItem.of(data.getId(), op.getQuantity(), data.getPrice());
+			OrderItem orderItem = OrderItem.of(data.id(), op.getQuantity(), data.price());
             orderItems.add(orderItem);
         });
 

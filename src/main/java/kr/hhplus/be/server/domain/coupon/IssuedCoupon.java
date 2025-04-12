@@ -36,7 +36,7 @@ public class IssuedCoupon {
 		this.usedAt = null;
 	}
 
-    public void user() {
+    public void use() {
     	this.usedAt = LocalDateTime.now();
     }
 }

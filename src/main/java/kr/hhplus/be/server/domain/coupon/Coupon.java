@@ -19,4 +19,14 @@ public class Coupon {
 	private LocalDate issuedStartDate;
 	private LocalDate issuedEndDate;
 	private int expiredDay;
+	
+	public Coupon(String type, Long amount, Long maxQuantity, Long remainQuantity, LocalDate issuedStartDate, LocalDate issuedEndDate, int expiredDay) {
+		this.type = type;
+		this.amount = amount;
+		this.maxQuantity = maxQuantity;
+		this.remainQuantity = remainQuantity;
+		this.issuedStartDate = issuedStartDate;
+		this.issuedEndDate = issuedEndDate;
+		this.expiredDay = expiredDay;
+	}
 }

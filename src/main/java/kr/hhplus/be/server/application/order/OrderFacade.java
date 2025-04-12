@@ -36,6 +36,7 @@ public class OrderFacade {
 		cri.getProducts().forEach(product -> productService.decreaseQuantity(product.getProductId(), product.getQuantity()));
 		userPoint.use(order.finalAmount());
 		userPointService.use(UserPointCommand.Use.of(userPoint.userId(), userPoint.point()));
+		issueCoupon.getIssuedCoupon().use();
 		
 		paymentService.pay(PaymentCommand.Pay.of(cri.getUserId(), order.id(), order.finalAmount()));
 		
