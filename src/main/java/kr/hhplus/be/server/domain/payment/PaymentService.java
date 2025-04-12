@@ -10,4 +10,8 @@ import lombok.RequiredArgsConstructor;
 public class PaymentService {
 	private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
+    
+    public void pay(PaymentCommand.Pay command) {
+    	paymentRepository.save(Payment.of(command.userId(), command.orderId(), command.amount()));
+    }
 }
