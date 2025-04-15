@@ -4,12 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -22,21 +20,31 @@ public class IssuedCoupon {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long userId;
+    private Long userId;
+    private Long couponId;
     private LocalDate expiryDate;
     private LocalDateTime usedAt;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "coupon_id", nullable = false)
-    private Coupon coupon;
     
-    public IssuedCoupon(long userId, LocalDate expiryDate, Coupon coupon) {
+    @Builder
+    public IssuedCoupon(Long id, Long userId, Long couponId, LocalDate expiryDate) {
 		this.userId = userId;
+		this.couponId = couponId;
 		this.expiryDate = expiryDate;
-		this.coupon = coupon;
 		this.usedAt = null;
 	}
+    
+    public static IssuedCoupon create(Long userId, Long couponId, LocalDate expiryDate) {
+    	return IssuedCoupon.builder()
+    			.userId(userId)
+    			.couponId(couponId)
+    			.expiryDate(expiryDate)
+    			.build();
+    }
 
     public void use() {
+    	if(expiryDate.isBefore(LocalDate.now())) {
+    		throw new IllegalArgumentException();
+    	}
     	this.usedAt = LocalDateTime.now();
     }
 }

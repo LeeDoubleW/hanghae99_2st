@@ -18,4 +18,18 @@ public class CouponInfo {
 			return new IssueCoupon(issuedCoupon);
 		}
 	}
+	
+	@Getter
+	@RequiredArgsConstructor
+	public static class CouponData {
+		private Coupon coupon;
+		
+		public CouponData(Coupon coupon) {
+			this.coupon = coupon;
+		}
+		
+		public static CouponData of(Coupon coupon) {
+			return new CouponData(coupon);
+		}
+	}
 }

@@ -1,5 +1,6 @@
 package kr.hhplus.be.server.domain.product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -21,6 +22,13 @@ public class ProductService {
 			return ProductInfo.V1.of(p.id(), p.productName(), p.price(), p.totalQuantity(), p.remainQuantity());
 		}).toList();
 		return products;
+	}
+	
+	public List<ProductInfo.V1> getProductListById(ProductCommand.Products products) {
+		return products.getProducts().stream().map(p -> {
+			Product product = productRepo.findById(p.getId());
+			return ProductInfo.V1.of(product.id(), product.productName(), product.price(), product.totalQuantity(), product.remainQuantity());
+		}).toList();
 	}
 	
 	public void decreaseQuantity(Long productId, Long quantity) {

@@ -1,9 +1,11 @@
 package kr.hhplus.be.server.domain.order;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +15,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import kr.hhplus.be.server.domain.coupon.Coupon;
 import kr.hhplus.be.server.domain.coupon.CouponInfo;
 import kr.hhplus.be.server.domain.coupon.IssuedCoupon;
-import kr.hhplus.be.server.domain.product.Product;
+import kr.hhplus.be.server.domain.product.ProductInfo;
 import kr.hhplus.be.server.domain.product.ProductRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,11 +32,13 @@ public class OrderServiceTest {
     @InjectMocks
     private OrderService orderService;
 
-    private Product product;
-    private IssuedCoupon coupon;
+    private CouponInfo.IssueCoupon issueCoupon;
+    private CouponInfo.CouponData couponData;
+    private List<ProductInfo.V1> products = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
+    	/*
     	product = Product.builder()
                 .id(100L)
                 .productName("My")
@@ -41,8 +46,10 @@ public class OrderServiceTest {
                 .totalQuantity(10L)
                 .remainQuantity(10L)
                 .build();
-        
-        coupon = null;
+        */
+    	issueCoupon = CouponInfo.IssueCoupon.of(IssuedCoupon.create(1L, 10L, LocalDate.now().plusDays(5)));
+    	couponData = CouponInfo.CouponData.of(Coupon.of("PERCENT", 1000L, 10L, 5L, LocalDate.now(), LocalDate.now().plusDays(10), 5));
+    	products.add(ProductInfo.V1.of(1L, "product1", 100L, 10L, 5L));
     }
 
 
@@ -53,11 +60,10 @@ public class OrderServiceTest {
         List<OrderCommand.Order.Product> orderItems = List.of(orderItem);
         OrderCommand.Order orderCommand = new OrderCommand.Order(1L, null, orderItems);
 
-        when(productRepository.findById(100L)).thenReturn(product);
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // when
-        Order orderInfo = orderService.createOrder(orderCommand, CouponInfo.IssueCoupon.of(coupon));
+        Order orderInfo = orderService.createOrder(orderCommand, issueCoupon, couponData, products);
 
         // then
         assertThat(orderInfo.totalAmount()).isEqualTo(100L);

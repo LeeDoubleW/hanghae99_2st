@@ -9,7 +9,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 import kr.hhplus.be.server.domain.BaseEntity;
+import kr.hhplus.be.server.domain.coupon.Coupon;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,6 +34,9 @@ public class Order extends BaseEntity{
 	private Long discountAmount;
 	private Long finalAmount;
 	
+	@Transient
+	private Coupon coupon;
+	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<OrderItem> items;
 	
@@ -50,12 +55,8 @@ public class Order extends BaseEntity{
         this.totalAmount = items.stream().mapToLong(OrderItem::getTotalPrice).sum();
     }
 	
-	public void calculateDiscountPrice(String type, Long amount) {
-		if(type.equals("PERCENT")) {
-			this.discountAmount = this.totalAmount * amount;
-		} else {
-			this.discountAmount = amount;
-		}
+	public void calculateDiscountPrice(Coupon coupon) {
+		this.discountAmount = coupon.calDiscount(this.totalAmount);
 	}
 	
 	public void calculateFinalPrice() {

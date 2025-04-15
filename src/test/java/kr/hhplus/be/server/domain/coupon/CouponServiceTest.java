@@ -10,18 +10,20 @@ import org.junit.jupiter.api.Test;
 class UserCouponTest {
 
     Long userId;
-    Coupon coupon;
+    //Coupon coupon;
+    Long couponId;
 
     @BeforeEach
     void setUp() {
     	userId = 1L;
-    	coupon = new Coupon("AMOUNT", 100L, 10L, 10L, LocalDate.now(), LocalDate.now().plusDays(10), 5);
+    	//coupon = new Coupon("AMOUNT", 100L, 10L, 10L, LocalDate.now(), LocalDate.now().plusDays(10), 5);
+    	couponId = 10L;
     }
 
     @Test
     void 쿠폰_사용_성공() {
     	
-        IssuedCoupon userCoupon = new IssuedCoupon(userId, null, coupon);
+        IssuedCoupon userCoupon = new IssuedCoupon(userId, null, couponId, LocalDate.now());
 
         userCoupon.use();
 
