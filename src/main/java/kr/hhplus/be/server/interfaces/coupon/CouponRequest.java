@@ -1,7 +1,7 @@
 package kr.hhplus.be.server.interfaces.coupon;
 
 import jakarta.validation.constraints.NotNull;
-import kr.hhplus.be.server.domain.coupon.CouponCommand;
+import kr.hhplus.be.server.domain.coupon.dto.CouponCommand;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

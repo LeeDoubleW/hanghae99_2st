@@ -4,18 +4,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import kr.hhplus.be.server.domain.coupon.CouponCommand;
-import kr.hhplus.be.server.domain.coupon.CouponInfo;
-import kr.hhplus.be.server.domain.coupon.CouponService;
-import kr.hhplus.be.server.domain.order.Order;
-import kr.hhplus.be.server.domain.order.OrderService;
-import kr.hhplus.be.server.domain.payment.PaymentCommand;
-import kr.hhplus.be.server.domain.payment.PaymentService;
-import kr.hhplus.be.server.domain.product.ProductInfo;
-import kr.hhplus.be.server.domain.product.ProductService;
-import kr.hhplus.be.server.domain.user.UserPoint;
-import kr.hhplus.be.server.domain.user.UserPointCommand;
-import kr.hhplus.be.server.domain.user.UserPointService;
+import kr.hhplus.be.server.domain.coupon.dto.CouponCommand;
+import kr.hhplus.be.server.domain.coupon.dto.CouponInfo;
+import kr.hhplus.be.server.domain.coupon.service.CouponService;
+import kr.hhplus.be.server.domain.order.dto.OrderInfo;
+import kr.hhplus.be.server.domain.order.service.OrderService;
+import kr.hhplus.be.server.domain.payment.dto.PaymentCommand;
+import kr.hhplus.be.server.domain.payment.service.PaymentService;
+import kr.hhplus.be.server.domain.product.dto.ProductInfo;
+import kr.hhplus.be.server.domain.product.service.ProductService;
+import kr.hhplus.be.server.domain.user.dto.UserPointCommand;
+import kr.hhplus.be.server.domain.user.entity.UserPoint;
+import kr.hhplus.be.server.domain.user.service.UserPointService;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -38,16 +38,16 @@ public class OrderFacade {
 		// ProductCommand ?
 		List<ProductInfo.V1> productIds = productService.getProductListById(cri.toProductCommand());
 		
-		Order order = orderService.createOrder(cri.toOrderCommand(), issueCoupon, couponData, productIds);
+		OrderInfo orderinfo = orderService.createOrder(cri.toOrderCommand(), issueCoupon, couponData, productIds);
 		
 		// 추후에 리팩토링
 		cri.getProducts().forEach(product -> productService.decreaseQuantity(product.getProductId(), product.getQuantity()));
-		userPoint.use(order.finalAmount());
+		userPoint.use(orderinfo.order().finalAmount());
 		userPointService.use(UserPointCommand.Use.of(userPoint.userId(), userPoint.point()));
 		issueCoupon.getIssuedCoupon().use();
 		
-		paymentService.pay(PaymentCommand.Pay.of(cri.getUserId(), order.id(), order.finalAmount()));
+		paymentService.pay(PaymentCommand.Pay.of(cri.getUserId(), orderinfo.order().id(), orderinfo.order().finalAmount()));
 		
-		return null;
+		return OrderResult.from(orderinfo);
 	}
 }

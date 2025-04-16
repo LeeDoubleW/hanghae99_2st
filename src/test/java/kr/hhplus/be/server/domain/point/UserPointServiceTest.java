@@ -12,10 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import kr.hhplus.be.server.domain.user.UserPoint;
-import kr.hhplus.be.server.domain.user.UserPointCommand;
-import kr.hhplus.be.server.domain.user.UserPointRepository;
-import kr.hhplus.be.server.domain.user.UserPointService;
+import kr.hhplus.be.server.domain.user.dto.UserPointCommand;
+import kr.hhplus.be.server.domain.user.entity.UserPoint;
+import kr.hhplus.be.server.domain.user.repository.UserPointRepository;
+import kr.hhplus.be.server.domain.user.service.UserPointService;
 
 @ExtendWith(MockitoExtension.class)
 public class UserPointServiceTest {

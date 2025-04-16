@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import kr.hhplus.be.server.domain.coupon.entity.IssuedCoupon;
+
 class UserCouponTest {
 
     Long userId;
