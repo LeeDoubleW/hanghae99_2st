@@ -37,7 +37,7 @@ public class Order extends BaseEntity{
 	@Transient
 	private Coupon coupon;
 	
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderItem> items;
 	
 	
