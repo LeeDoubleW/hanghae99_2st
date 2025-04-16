@@ -1,7 +1,7 @@
 package kr.hhplus.be.server.domain.product.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -17,8 +17,8 @@ public class ProductService {
 	private final ProductRepository productRepo;
 	
 	public ProductInfo.V1 getProduct(Long productId) {
-		Product product = productRepo.findById(productId);
-		return ProductInfo.V1.of(product.id(), product.productName(), product.price(), product.totalQuantity(), product.remainQuantity());
+		Optional<Product> product = productRepo.findById(productId);
+		return ProductInfo.V1.of(product.get().id(), product.get().productName(), product.get().price(), product.get().totalQuantity(), product.get().remainQuantity());
 	}
 	
 	public List<ProductInfo.V1> getProductList() {
@@ -30,14 +30,14 @@ public class ProductService {
 	
 	public List<ProductInfo.V1> getProductListById(ProductCommand.Products products) {
 		return products.getProducts().stream().map(p -> {
-			Product product = productRepo.findById(p.getId());
-			return ProductInfo.V1.of(product.id(), product.productName(), product.price(), product.totalQuantity(), product.remainQuantity());
+			Optional<Product> product = productRepo.findById(p.getId());
+			return ProductInfo.V1.of(product.get().id(), product.get().productName(), product.get().price(), product.get().totalQuantity(), product.get().remainQuantity());
 		}).toList();
 	}
 	
 	public void decreaseQuantity(Long productId, Long quantity) {
-		Product productData = productRepo.findById(productId);
-		ProductInfo.V1 info = ProductInfo.V1.of(productData.id(), productData.productName(), productData.price(), productData.totalQuantity(), productData.remainQuantity());
+		Optional<Product> productData = productRepo.findById(productId);
+		ProductInfo.V1 info = ProductInfo.V1.of(productData.get().id(), productData.get().productName(), productData.get().price(), productData.get().totalQuantity(), productData.get().remainQuantity());
 		Product product = Product.of(info.getId(), info.getProductName(), info.getPrice(), info.getTotalQuantity(), info.getRemainQuantity());
 		product.decreaseQuantity(quantity);
 		productRepo.save(product);
