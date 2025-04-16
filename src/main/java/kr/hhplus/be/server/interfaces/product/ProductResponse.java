@@ -2,7 +2,7 @@ package kr.hhplus.be.server.interfaces.product;
 
 import java.util.List;
 
-import kr.hhplus.be.server.domain.product.Product;
+import kr.hhplus.be.server.domain.product.entity.Product;
 import lombok.Builder;
 
 public class ProductResponse {

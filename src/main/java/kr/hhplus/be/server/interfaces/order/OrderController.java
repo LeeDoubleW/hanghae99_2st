@@ -29,7 +29,7 @@ public class OrderController {
 	@Operation(summary = "주문", description = "주문을 요청합니다.")
     public ResponseEntity<OrderResponse.V1> createOrder(@RequestBody OrderRequest.V1 request) {
 		OrderResult result = orderFacade.orderAndPayment(request.toCommand());
-		return ResponseEntity.ok(null);
+		return ResponseEntity.ok(OrderResponse.V1.of(result.order()));
     }
 	/*
 	// 주문내역 목록조회

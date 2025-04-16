@@ -2,8 +2,8 @@ package kr.hhplus.be.server.application.order;
 
 import java.util.List;
 
-import kr.hhplus.be.server.domain.order.OrderCommand;
-import kr.hhplus.be.server.domain.product.ProductCommand;
+import kr.hhplus.be.server.domain.order.dto.OrderCommand;
+import kr.hhplus.be.server.domain.product.dto.ProductCommand;
 import kr.hhplus.be.server.interfaces.order.OrderRequest.Product;
 import lombok.Builder;
 import lombok.Getter;

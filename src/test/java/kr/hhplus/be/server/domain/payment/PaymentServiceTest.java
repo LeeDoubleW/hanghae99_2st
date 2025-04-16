@@ -11,6 +11,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import kr.hhplus.be.server.domain.payment.dto.PaymentCommand;
+import kr.hhplus.be.server.domain.payment.entity.Payment;
+import kr.hhplus.be.server.domain.payment.repository.PaymentRepository;
+import kr.hhplus.be.server.domain.payment.service.PaymentService;
+
 @ExtendWith(MockitoExtension.class)
 public class PaymentServiceTest {
 

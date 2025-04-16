@@ -15,11 +15,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import kr.hhplus.be.server.domain.coupon.Coupon;
-import kr.hhplus.be.server.domain.coupon.CouponInfo;
-import kr.hhplus.be.server.domain.coupon.IssuedCoupon;
-import kr.hhplus.be.server.domain.product.ProductInfo;
-import kr.hhplus.be.server.domain.product.ProductRepository;
+import kr.hhplus.be.server.domain.coupon.dto.CouponInfo;
+import kr.hhplus.be.server.domain.coupon.entity.Coupon;
+import kr.hhplus.be.server.domain.coupon.entity.IssuedCoupon;
+import kr.hhplus.be.server.domain.order.dto.OrderCommand;
+import kr.hhplus.be.server.domain.order.dto.OrderInfo;
+import kr.hhplus.be.server.domain.order.entity.Order;
+import kr.hhplus.be.server.domain.order.repository.OrderRepository;
+import kr.hhplus.be.server.domain.order.service.OrderService;
+import kr.hhplus.be.server.domain.product.dto.ProductInfo;
+import kr.hhplus.be.server.domain.product.repository.ProductRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceTest {
@@ -63,9 +68,9 @@ public class OrderServiceTest {
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // when
-        Order orderInfo = orderService.createOrder(orderCommand, issueCoupon, couponData, products);
+        OrderInfo orderInfo = orderService.createOrder(orderCommand, issueCoupon, couponData, products);
 
         // then
-        assertThat(orderInfo.totalAmount()).isEqualTo(100L);
+        assertThat(orderInfo.order().totalAmount()).isEqualTo(100L);
     }
 }
