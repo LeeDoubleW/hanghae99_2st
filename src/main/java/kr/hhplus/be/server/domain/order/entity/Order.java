@@ -3,10 +3,12 @@ package kr.hhplus.be.server.domain.order.entity;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 import kr.hhplus.be.server.domain.BaseEntity;
@@ -36,7 +38,8 @@ public class Order extends BaseEntity{
 	@Transient
 	private Coupon coupon;
 	
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name="orderId", nullable = false)
 	private List<OrderItem> items;
 	
 	

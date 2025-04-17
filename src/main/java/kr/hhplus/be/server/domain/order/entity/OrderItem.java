@@ -1,12 +1,11 @@
 package kr.hhplus.be.server.domain.order.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import kr.hhplus.be.server.domain.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,14 +15,13 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
+@Table(name = "order_items", indexes = {
+    @Index(name = "idx_order_id", columnList = "order_id")
+})
 public class OrderItem extends BaseEntity{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="order_id")
-    private Long orderId;
     
     private Long productId;
 
