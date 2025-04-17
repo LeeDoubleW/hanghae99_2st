@@ -2,7 +2,7 @@ package kr.hhplus.be.server.application.user;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import kr.hhplus.be.server.domain.user.dto.UserPointCommand;
 import kr.hhplus.be.server.domain.user.entity.UserPoint;
@@ -10,7 +10,7 @@ import kr.hhplus.be.server.domain.user.entity.UserPointHistory;
 import kr.hhplus.be.server.domain.user.service.UserPointService;
 import lombok.RequiredArgsConstructor;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class UserFacade {
 	private final UserPointService userService;

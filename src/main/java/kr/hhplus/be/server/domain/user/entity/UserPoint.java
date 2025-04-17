@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import kr.hhplus.be.server.domain.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +16,9 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
+@Table(name="users", indexes= {
+	@Index(name="idx_user_id", columnList="user_id")
+})
 public class UserPoint extends BaseEntity{
 	final int MAX_AMOUNT = 1_000_000_000;
 	final int CHARGE_MAX_LIMIT_AMOUNT = 1_000_000_000;

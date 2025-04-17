@@ -8,7 +8,7 @@ import kr.hhplus.be.server.domain.user.entity.UserPointHistory;
 
 public interface UserPointRepository {
 	Optional<UserPoint> findById(Long userId);
-	void update(UserPoint user);
+	UserPoint update(UserPoint user);
 	List<UserPointHistory> getHistory(Long userId);
 	void historySave(UserPointHistory userPointHistory);
 }

@@ -1,9 +1,11 @@
-package kr.hhplus.be.server.domain.point;
+package kr.hhplus.be.server.domain.user.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +35,7 @@ public class UserPointServiceTest {
     	Long amount = 1000L;
 
         when(userPointRepository.findById(anyLong()))
-            .thenReturn(user);
+            .thenReturn(Optional.of(user));
 
         // when
         UserPoint point = userPointService.getUser(1L);
@@ -54,7 +56,7 @@ public class UserPointServiceTest {
             .build();
 
         when(userPointRepository.findById(anyLong()))
-            .thenReturn(user);
+            .thenReturn(Optional.of(user));
 
         Long chargeAmount = 100L;
         UserPointCommand.Charge command = UserPointCommand.Charge.of(user.userId(), chargeAmount);
@@ -76,7 +78,7 @@ public class UserPointServiceTest {
             .build();
 
         when(userPointRepository.findById(anyLong()))
-            .thenReturn(user);
+            .thenReturn(Optional.of(user));
 
         Long useAmount = 10_001L;
         UserPointCommand.Use command = UserPointCommand.Use.of(user.userId(), useAmount);

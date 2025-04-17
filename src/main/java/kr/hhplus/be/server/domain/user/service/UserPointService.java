@@ -16,6 +16,13 @@ import lombok.RequiredArgsConstructor;
 public class UserPointService {
 	private final UserPointRepository userRepo;
 	
+	// 등록을 위한 메서드
+	public UserPoint save(UserPoint user) {
+		UserPoint userData = userRepo.update(user);
+		
+		return userData;
+	}
+	
 	public UserPoint getUser(Long userId) {
 		return userRepo.findById(userId).get();
 	}

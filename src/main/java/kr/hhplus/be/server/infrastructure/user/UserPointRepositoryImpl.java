@@ -24,9 +24,9 @@ public class UserPointRepositoryImpl implements UserPointRepository{
 	}
 
 	@Override
-	public void update(UserPoint user) {
+	public UserPoint update(UserPoint user) {
 		
-		userPointJpaRepository.save(user);
+		return userPointJpaRepository.save(user);
 	}
 
 	@Override
