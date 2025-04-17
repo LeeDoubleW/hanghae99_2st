@@ -16,6 +16,10 @@ import lombok.RequiredArgsConstructor;
 public class ProductService {
 	private final ProductRepository productRepo;
 	
+	public Product save(Product product) {
+		return productRepo.save(product);
+	}
+	
 	public ProductInfo.V1 getProduct(Long productId) {
 		Optional<Product> product = productRepo.findById(productId);
 		return ProductInfo.V1.of(product.get().id(), product.get().productName(), product.get().price(), product.get().totalQuantity(), product.get().remainQuantity());
