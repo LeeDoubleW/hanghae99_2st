@@ -17,6 +17,10 @@ public class CouponService {
 	
 	private final CouponRepository couponRepo;
 	
+	public Coupon save(Coupon coupon) {
+		return couponRepo.save(coupon);
+	}
+	
 	public CouponInfo.IssueCoupon getUserCoupon(CouponCommand.IssueCoupon issueCommand) {
 		// CouponInfo 셋팅 발급된 쿠폰과 쿠폰 정보
 		return CouponInfo.IssueCoupon.of(couponRepo.findByIssuedCouponForId(issueCommand.getUserId(), issueCommand.getIssuedCouponId())) ;
