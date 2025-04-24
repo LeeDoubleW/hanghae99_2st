@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.domain.coupon;
+package kr.hhplus.be.server.domain.coupon.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

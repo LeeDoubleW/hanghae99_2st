@@ -1,9 +1,10 @@
-package kr.hhplus.be.server.domain.product;
+package kr.hhplus.be.server.domain.product.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,12 +26,12 @@ class ProductServiceTest {
     @InjectMocks
     private ProductService getProductService;
 
-    private Product product;
+    private Optional<Product> product;
     private List<Product> products;
 
     @BeforeEach
     void setUp() {
-        product = new Product(1L, "아디다스 운동화", 10000L, 10L, 10L);
+        product = Optional.of(new Product(1L, "아디다스 운동화", 10000L, 10L, 10L));
         
         products.add(new Product(1L, "나이키 운동화", 20000L, 10L, 10L));
         products.add(new Product(2L, "언더아머 운동화", 30000L, 10L, 10L));

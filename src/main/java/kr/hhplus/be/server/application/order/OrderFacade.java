@@ -2,7 +2,8 @@ package kr.hhplus.be.server.application.order;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.hhplus.be.server.domain.coupon.dto.CouponCommand;
 import kr.hhplus.be.server.domain.coupon.dto.CouponInfo;
@@ -18,7 +19,8 @@ import kr.hhplus.be.server.domain.user.entity.UserPoint;
 import kr.hhplus.be.server.domain.user.service.UserPointService;
 import lombok.RequiredArgsConstructor;
 
-@Component
+@Service
+@Transactional
 @RequiredArgsConstructor
 public class OrderFacade {
 	private final UserPointService userPointService;

@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,9 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
+@Table(name="issued_coupon", indexes = {
+	@Index(name="idx_user_coupon", columnList="user_id, coupon_id")
+})
 public class IssuedCoupon {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
